@@ -1,0 +1,51 @@
+{
+  "name": "@hono/wide-logger",
+  "version": "1.0.0",
+  "description": "Wide-event logging middleware for Hono - structured, high-cardinality, queryable logs",
+  "keywords": [
+    "canonical-logs",
+    "hono",
+    "logging",
+    "middleware",
+    "observability",
+    "structured-logging",
+    "wide-events"
+  ],
+  "license": "MIT",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "lint": "eslint src/**/*.ts",
+    "typecheck": "tsc --noEmit",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "hono": "^4.0.0",
+    "oxfmt": "^0.33.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "peerDependencies": {
+    "hono": "^4.0.0"
+  }
+}
