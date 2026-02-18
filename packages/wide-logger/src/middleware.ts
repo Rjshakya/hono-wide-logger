@@ -60,6 +60,7 @@ export function wideLogger(options?: WideLoggerOptions): MiddlewareHandler {
       timestamp: new Date().toISOString(),
       method: c.req.method,
       path: c.req.path,
+      query_params: Object.fromEntries(new URL(c.req.url).searchParams),
       client_ip: c.req.header("x-forwarded-for") || c.req.header("x-real-ip"),
       user_agent: c.req.header("user-agent"),
       content_type: c.req.header("Content-type"),
@@ -76,7 +77,8 @@ export function wideLogger(options?: WideLoggerOptions): MiddlewareHandler {
           code: (error as any).code || "UNKNOWN",
           message: error.message,
           retriable: (error as any).retriable ?? false,
-          stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
+          stack:
+            process.env.NODE_ENV === "development" ? error.stack : undefined,
           ...metadata,
         };
       },
@@ -95,8 +97,16 @@ export function wideLogger(options?: WideLoggerOptions): MiddlewareHandler {
       // Post-request: finalize event
       event.status_code = c.res.status;
       event.duration_ms = Date.now() - startTime;
+
+      // Check if Hono handled an error internally (status >= 500)
+      if (event.status_code >= 500 && !event.error) {
+        // Hono caught the error and set status to 500
+        wideLoggerContext.addError(
+          new Error(`HTTP ${event.status_code} error`),
+        );
+      }
     } catch (error) {
-      // Handle errors
+      // Handle errors (for frameworks that don't catch internally)
       event.status_code = 500;
       event.duration_ms = Date.now() - startTime;
       wideLoggerContext.addError(error as Error);
@@ -108,7 +118,6 @@ export function wideLogger(options?: WideLoggerOptions): MiddlewareHandler {
         : defaultSampling(event as WideEvent, {
             slowThresholdMs: opts.slowThresholdMs || 2000,
             sampleRate: opts.sampleRate || 0.05,
-            errorCode:opts.errorCode
           });
 
       if (shouldLog) {
