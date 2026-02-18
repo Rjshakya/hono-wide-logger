@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { Hono } from "hono";
 import { wideLogger } from "../src/middleware";
-import type { Logger, Storage, WideLoggerContext } from "../src/types";
+import type { Logger, WideLoggerContext } from "../src/types";
 
 describe("wideLogger middleware", () => {
   describe("basic behavior", () => {
