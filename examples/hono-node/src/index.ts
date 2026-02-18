@@ -1,7 +1,7 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
-import { wideLogger } from "@hono/wide-logger";
-import type { WideEvent, Logger, Storage } from "@hono/wide-logger";
+import { wideLogger } from "hono-wide-logger";
+import type { WideEvent, Logger, Storage } from "hono-wide-logger";
 
 // ==========================================
 // EXAMPLE 1: Basic Usage with Default Options
