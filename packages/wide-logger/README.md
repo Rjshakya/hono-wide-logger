@@ -1,4 +1,4 @@
-# @hono/wide-logger
+# hono-wide-logger
 
 Wide-event logging middleware for Hono - structured, high-cardinality, queryable logs inspired by [loggingsucks.com](https://loggingsucks.com).
 
@@ -13,18 +13,18 @@ Wide-event logging middleware for Hono - structured, high-cardinality, queryable
 ## Installation
 
 ```bash
-npm install @hono/wide-logger
+npm install hono-wide-logger
 # or
-pnpm add @hono/wide-logger
+pnpm add hono-wide-logger
 # or
-yarn add @hono/wide-logger
+yarn add hono-wide-logger
 ```
 
 ## Quick Start
 
 ```typescript
 import { Hono } from "hono";
-import { wideLogger } from "@hono/wide-logger";
+import { wideLogger } from "hono-wide-logger";
 
 const app = new Hono();
 
